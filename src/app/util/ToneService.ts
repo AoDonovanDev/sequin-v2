@@ -25,9 +25,9 @@ export class ToneService{
     playSequence(){
         new Tone.Sequence((time, note) => {
             this.instance.triggerAttackRelease(note!, 0.1, time);
-            // subdivisions are given as subarrays
         }, this.sequence).start(0);
         Tone.getTransport().start();
     }
+
 
 }
