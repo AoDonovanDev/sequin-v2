@@ -2,17 +2,22 @@
 
 import Beat from "./Beat";
 import { v4 as uuid } from 'uuid';
-
-
-export default function Board( { octave } : {octave: number}){
+import scalePicker from "../util/scalePicker";
+import OctaveSelect from "./OctaveSelect";
+import { useState, useContext } from "react";
+export default function Board(){
 
    
-    const beats = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16]
-    let scale = [`C${octave+1}`, `B${octave}`, `A#${octave}`, `A${octave}`, `G#${octave}`, `G${octave}`, `F#${octave}`, `F${octave}`, `E${octave}`, `D#${octave}`, `D${octave}`, `C#${octave}`, `C${octave}`]
+    const beats = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15];
+    const [octave, setOctave] = useState(1);
+    const scale = scalePicker(octave, "major");
+    
+
 
     return (
-        <div className="flex border-black border-2 border-solid rounded-lg shadow-xl" style={{userSelect: "none"}}>
+        <div className="flex border-black border-[2px] border-solid rounded-xl shadow-md" style={{userSelect: "none"}}>
             {beats.map(b => <Beat key={uuid()} count={b} scale={scale}/>)}
+            <OctaveSelect setOctave={setOctave}/>
         </div>
     )
 }
