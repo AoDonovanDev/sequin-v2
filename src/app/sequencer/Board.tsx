@@ -5,6 +5,8 @@ import { v4 as uuid } from 'uuid';
 import scalePicker from "../util/scalePicker";
 import OctaveSelect from "./OctaveSelect";
 import { useState, useContext } from "react";
+import { ToneServiceContextProvider } from "../ToneServiceContext";
+
 export default function Board(){
 
    
@@ -16,8 +18,12 @@ export default function Board(){
 
     return (
         <div className="flex border-black border-[2px] border-solid rounded-xl shadow-md" style={{userSelect: "none"}}>
-            {beats.map(b => <Beat key={uuid()} count={b} scale={scale}/>)}
-            <OctaveSelect setOctave={setOctave}/>
+            <ToneServiceContextProvider>
+            <>
+                {beats.map(b => <Beat key={uuid()} count={b} scale={scale}/>)}
+                <OctaveSelect setOctave={setOctave}/>
+            </>
+            </ToneServiceContextProvider>
         </div>
     )
 }
