@@ -5,7 +5,13 @@ import { useContext } from "react";
 import { ToneServiceContext } from "../ToneServiceContext";
 
 
-export default function SequencerNode( { note, active, setActiveNode, count } : {note: string, active: boolean, setActiveNode: Dispatch<SetStateAction<string>>, count: number}){
+export default function SequencerNode( { note, active, setActiveNode, count, scaleIndex } : {
+    note: string, 
+    active: boolean, 
+    setActiveNode: Dispatch<SetStateAction<string>>, 
+    count: number,
+    scaleIndex: number    
+}){
 
     const [isHovered, setIsHovered] = useState(false);
 
@@ -24,14 +30,14 @@ export default function SequencerNode( { note, active, setActiveNode, count } : 
         setActiveNode(current => {
             return current == note ? "" : note;
         })
-        toneService.updateSequence(note, count);
+        toneService.updateSequence(note, scaleIndex, count);
         toneService.playSequence();
     }
 
     return (
-        <div className={`border-black border border-solid ${isHovered && "bg-white"} ${active && "bg-primary"} cursor-pointer p-[8px]`} 
+        <div className={`border-black border border-solid ${isHovered && "bg-white"} ${active && "bg-primary"} cursor-pointer p-[20px]`} 
             onMouseEnter={handleMouseOver} 
             onMouseLeave={handleMouseLeave}
-            onClick={handleNodeClick}>{note}</div>
+            onClick={handleNodeClick}></div>
     )
 }

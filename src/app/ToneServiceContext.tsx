@@ -1,7 +1,7 @@
 import { createContext, ReactElement } from "react";
 import { ToneService } from "./util/ToneService";
 
-const toneService = new ToneService();
+const toneService = new ToneService("major");
 
 export interface ToneServiceState {
     toneService : ToneService;
@@ -20,7 +20,7 @@ const ToneServiceContextProvider = (
 ): ReactElement => {
     return (
         <ToneServiceContext.Provider value={{
-                toneService: new ToneService()
+                toneService: new ToneService("major")
             }}>
             {props.children}
         </ToneServiceContext.Provider>

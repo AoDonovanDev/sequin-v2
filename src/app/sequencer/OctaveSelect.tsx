@@ -1,12 +1,21 @@
 'use client';
 
-import { Dispatch, SetStateAction, useState } from "react"
+import { Dispatch, SetStateAction, SyntheticEvent, useContext } from "react"
+import { ToneServiceContext } from "../ToneServiceContext";
 
 
-export default function OctaveSelect( { setOctave } : { setOctave: Dispatch<SetStateAction<number>>}){
+export default function OctaveSelect(){
+
+    const { toneService } = useContext(ToneServiceContext);
+
+    function handleOctaveSelect(event: SyntheticEvent){
+        const target = event.target as HTMLInputElement;
+        toneService.setOctave(parseInt(target.value));
+    }
+
     return (
         <div style={{transform: "rotate(270deg)"}} className="relative top-[80px] h-[60px]">
-            <input type="range" min={1} max={4} defaultValue={2} className="range" step={1} onChange={(e)=>setOctave(parseInt(e.target.value))}/>
+            <input type="range" min={1} max={4} defaultValue={2} className="range" step={1} onChange={handleOctaveSelect}/>
             <div className="flex justify-between px-2 text-xs">
                 <span>|</span>
                 <span>|</span>
