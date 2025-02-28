@@ -30,6 +30,7 @@ export default function SequencerNode( { note, active, setActiveNode, count, sca
         setActiveNode(current => {
             return current == note ? "" : note;
         })
+        console.log("ahhhhhhhhh", note)
         toneService.updateSequence(note, scaleIndex, count);
         toneService.playSequence();
     }
