@@ -1,11 +1,15 @@
-'use client'
+'use client';
 
 import Beat from "./Beat";
 import { v4 as uuid } from 'uuid';
 import scalePicker from "../util/scalePicker";
 import OctaveSelect from "./OctaveSelect";
 import { useState, useContext } from "react";
-import { ToneServiceContextProvider } from "../ToneServiceContext";
+import dynamic from "next/dynamic";
+
+const DynamicToneServiceContextProvider = dynamic(() => import("../ToneServiceContext"), {
+    ssr: false
+})
 
 export default function Board(){
 
@@ -15,15 +19,14 @@ export default function Board(){
     const scale = scalePicker(octave, "major");
     
 
-
     return (
         <div className="flex border-black border-[2px] border-solid rounded-xl shadow-md" style={{userSelect: "none"}}>
-            <ToneServiceContextProvider>
+            <DynamicToneServiceContextProvider>
             <>
                 {beats.map(b => <Beat key={uuid()} count={b} scale={scale}/>)}
                 <OctaveSelect setOctave={setOctave}/>
             </>
-            </ToneServiceContextProvider>
+            </DynamicToneServiceContextProvider>
         </div>
     )
 }

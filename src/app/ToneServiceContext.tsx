@@ -15,7 +15,7 @@ export interface ToneServiceStateProviderProps {
     children: ReactElement
 }
 
-export const ToneServiceContextProvider = (
+const ToneServiceContextProvider = (
     props: ToneServiceStateProviderProps
 ): ReactElement => {
     return (
@@ -26,3 +26,5 @@ export const ToneServiceContextProvider = (
         </ToneServiceContext.Provider>
     )
 }
+
+export default ToneServiceContextProvider;

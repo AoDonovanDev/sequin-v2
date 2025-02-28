@@ -1,3 +1,5 @@
+'use client';
+
 import { Dispatch, SetStateAction, SyntheticEvent, useState } from "react";
 import { useContext } from "react";
 import { ToneServiceContext } from "../ToneServiceContext";
@@ -7,8 +9,7 @@ export default function SequencerNode( { note, active, setActiveNode, count } : 
 
     const [isHovered, setIsHovered] = useState(false);
 
-    const { toneService } = useContext(ToneServiceContext)
-
+    const { toneService } = useContext(ToneServiceContext);
 
     function handleMouseOver(e: SyntheticEvent){
         if(active) return;
