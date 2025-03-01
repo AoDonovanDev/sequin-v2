@@ -44,7 +44,8 @@ export class ToneService{
 
     setOctave(num: number){
         this.octave = num;
-        this.scale = this.scaleConstructor(this.scaleName)
+        this.scale = this.scaleConstructor(this.scaleName);
+        this.playSequence();
     }
 
     scaleConstructor(scaleName: string) : string[]{
