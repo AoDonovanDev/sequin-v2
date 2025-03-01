@@ -40,6 +40,8 @@ export class ToneService{
     }
 
     setOctave(num: number){
+        this.instance.dispose()
+        this.instance = new Tone.Synth().toDestination();
         this.octave = num;
         this.scale = this.scaleConstructor(this.scaleName)
     }
