@@ -5,21 +5,28 @@ import { useContext, useState, useEffect } from 'react';
 import dynamic from 'next/dynamic';
 import { ToneServiceContext } from '../ToneServiceContext';
 
-const SequencerNode = dynamic(() => import("./SequencerNode"));
+const SequencerNode = dynamic(() => import("./SequencerNode"), {
+    ssr: false
+});
 
 export default function Beat( { count } : { count: number }){
 
     const [activeNode, setActiveNode] = useState("");
-
-    const [scale, setScale] = useState([""]);
     const { toneService } = useContext(ToneServiceContext);
-    const fuck = toneService.scale;
+    const [scale, setScale] = useState([""]);
     
+    console.log("scale at top level of beat", scale)
 
     useEffect(() => {
-        setScale(fuck);
-        console.log("hmmmmmmmmm", fuck)
-    }, [fuck])
+        setScale(current => {
+            const copy = [...toneService.scale];
+            console.log("value of toneService.scale being set to scale state var in useEffect", copy)
+            return copy;
+            }
+        );
+        console.log("use effect updates scale, should trigger re render of all beats", toneService.scale);
+        console.log("here is the updated scale", scale);
+    }, [toneService.scale])
 
     return(
         <div className={`grid ${count % 4 == 0 && "bg-gray-300"}`}>

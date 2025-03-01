@@ -15,6 +15,8 @@ const DynamicOctaveSelect = dynamic(() => import("./OctaveSelect"), {
     ssr: false
 });
 
+console.log("whole board re rendered")
+
 export default function Board(){
 
    
