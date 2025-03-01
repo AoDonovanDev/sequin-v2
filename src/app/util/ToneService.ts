@@ -13,6 +13,8 @@ export class ToneService{
 
     scaleName: string;
 
+    currentSequence?: Tone.Sequence;
+
 
     constructor(scaleName: string){
         this.instance = new Tone.Synth().toDestination();
@@ -33,15 +35,14 @@ export class ToneService{
     }
 
     playSequence(){
-        new Tone.Sequence((time, note) => {
+        this.currentSequence?.dispose();
+        this.currentSequence = new Tone.Sequence((time, note) => {
             this.instance.triggerAttackRelease(note!, 0.1, time);
         }, this.sequence).start(0);
         Tone.getTransport().start();
     }
 
     setOctave(num: number){
-        this.instance.dispose()
-        this.instance = new Tone.Synth().toDestination();
         this.octave = num;
         this.scale = this.scaleConstructor(this.scaleName)
     }
