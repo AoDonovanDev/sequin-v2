@@ -4,6 +4,7 @@ import { v4 as uuid } from "uuid";
 import dynamic from "next/dynamic";
 import { useContext, useState } from "react";
 import { ToneServiceContext } from "../ToneServiceContext";
+import InstrumentSelect from "./InstrumentSelect";
 
 const DynamicToneServiceContextProvider = dynamic(() => import("../ToneServiceContext"), {
     ssr: false
@@ -35,11 +36,6 @@ export default function Board(){
         scale: toneService.scale
     })
 
-    
-    function testInstChange(){
-        toneService.setDuoSynth();
-    }
-
     return (
         <div className="flex border-black border-[2px] border-solid rounded-xl shadow-md" style={{userSelect: "none"}}>
             <DynamicToneServiceContextProvider contextValue={toneService}>
@@ -47,9 +43,7 @@ export default function Board(){
                 {beats.map(b => <DynamicBeat key={uuid()} count={b} scale={uiState.scale} sequence={uiState.sequence} setUiState={setUiState} />)}
                 <div className='flex flex-col'>
                     <DynamicOctaveSelect setUiState={setUiState}/>
-                    <button className='btn btn-primary relative top-[120px] w-3/4 self-center'>synth</button>
-                    <button className='btn btn-secondary relative top-[120px] w-3/4 self-center'>AM synth</button>
-                    <button className='btn btn-info relative top-[120px] w-3/4 self-center' onClick={testInstChange}>duo synth</button>
+                    <InstrumentSelect />
                 </div>
             </>
             </DynamicToneServiceContextProvider>

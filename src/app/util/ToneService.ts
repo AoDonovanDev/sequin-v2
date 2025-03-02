@@ -3,7 +3,7 @@ import { scaleMap } from "./scaleMap";
 
 export class ToneService{
 
-    instance: Tone.Synth<Tone.SynthOptions> | Tone.DuoSynth;
+    instance: Tone.Synth<Tone.SynthOptions> | Tone.DuoSynth | Tone.AMSynth;
 
     sequence: (string | null)[];
 
@@ -67,6 +67,16 @@ export class ToneService{
     setDuoSynth(){
         this.instance.dispose();
         this.instance = new Tone.DuoSynth().toDestination();
+    }
+
+    setAMSynth(){
+        this.instance.dispose();
+        this.instance = new Tone.AMSynth().toDestination();
+    }
+
+    setSynth(){
+        this.instance.dispose();
+        this.instance = new Tone.Synth().toDestination()
     }
 
 }
