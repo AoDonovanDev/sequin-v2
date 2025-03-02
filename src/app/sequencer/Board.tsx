@@ -1,9 +1,9 @@
 'use client';
 
-import { v4 as uuid } from 'uuid';
+import { v4 as uuid } from "uuid";
 import dynamic from "next/dynamic";
-import { useContext, useEffect, useState } from 'react';
-import { ToneServiceContext } from '../ToneServiceContext';
+import { useContext, useState } from "react";
+import { ToneServiceContext } from "../ToneServiceContext";
 
 const DynamicToneServiceContextProvider = dynamic(() => import("../ToneServiceContext"), {
     ssr: false
@@ -17,23 +17,40 @@ const DynamicOctaveSelect = dynamic(() => import("./OctaveSelect"), {
     ssr: false
 });
 
+export interface UiState{
+    octave: number,
+    scale: string[],
+    sequence: (string | null)[]
+}
+
 export default function Board(){
     
     const beats = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15];
 
     const { toneService } = useContext(ToneServiceContext);
-    const [scale, setScale] = useState(toneService.scale);
-
-    useEffect(() => {
-        setScale(toneService.scale);
-    }, [toneService.scale])
     
+    const [uiState, setUiState] = useState({
+        octave: toneService.octave,
+        sequence: toneService.sequence,
+        scale: toneService.scale
+    })
+
+    
+    function testInstChange(){
+        toneService.setDuoSynth();
+    }
+
     return (
         <div className="flex border-black border-[2px] border-solid rounded-xl shadow-md" style={{userSelect: "none"}}>
             <DynamicToneServiceContextProvider contextValue={toneService}>
             <>
-                {beats.map(b => <DynamicBeat key={uuid()} count={b} scale={scale} />)}
-                <DynamicOctaveSelect/>
+                {beats.map(b => <DynamicBeat key={uuid()} count={b} scale={uiState.scale} sequence={uiState.sequence} setUiState={setUiState} />)}
+                <div className='flex flex-col'>
+                    <DynamicOctaveSelect setUiState={setUiState}/>
+                    <button className='btn btn-primary relative top-[120px] w-3/4 self-center'>synth</button>
+                    <button className='btn btn-secondary relative top-[120px] w-3/4 self-center'>AM synth</button>
+                    <button className='btn btn-info relative top-[120px] w-3/4 self-center' onClick={testInstChange}>duo synth</button>
+                </div>
             </>
             </DynamicToneServiceContextProvider>
         </div>

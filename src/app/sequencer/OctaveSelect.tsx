@@ -2,15 +2,26 @@
 
 import { Dispatch, SetStateAction, SyntheticEvent, useContext } from "react"
 import { ToneServiceContext } from "../ToneServiceContext";
+import { UiState } from "./Board";
 
 
-export default function OctaveSelect(){
+export default function OctaveSelect( { setUiState }: {setUiState: Dispatch<SetStateAction<UiState>>} ){
 
     const { toneService } = useContext(ToneServiceContext);
 
     function handleOctaveSelect(event: SyntheticEvent){
-        const target = event.target as HTMLInputElement;
-        toneService.setOctave(parseInt(target.value));
+        const target = event.target as HTMLInputElement
+        const newOctaveValue = parseInt(target.value);
+        toneService.setOctave(newOctaveValue)
+        setUiState(() => {
+            const {octave, scale, sequence} = toneService;
+            console.log(octave,scale,sequence);
+            return {
+                octave,
+                scale,
+                sequence
+            }
+        })
     }
 
     return (

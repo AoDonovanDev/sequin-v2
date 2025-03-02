@@ -3,14 +3,15 @@
 import { Dispatch, SetStateAction, SyntheticEvent, useState } from "react";
 import { useContext } from "react";
 import { ToneServiceContext } from "../ToneServiceContext";
+import { UiState } from "./Board";
 
 
-export default function SequencerNode( { note, active, setActiveNode, count, scaleIndex } : {
+export default function SequencerNode( { note, active, count, scaleIndex, setUiState } : {
     note: string, 
-    active: boolean, 
-    setActiveNode: Dispatch<SetStateAction<string>>, 
+    active: boolean,
     count: number,
-    scaleIndex: number    
+    scaleIndex: number,
+    setUiState: Dispatch<SetStateAction<UiState>>  
 }){
 
     const [isHovered, setIsHovered] = useState(false);
@@ -27,12 +28,14 @@ export default function SequencerNode( { note, active, setActiveNode, count, sca
     }    
 
     function handleNodeClick(){
-        setActiveNode(current => {
-            return current == note ? "" : note;
-        })
-        console.log("ahhhhhhhhh", note)
-        toneService.updateSequence(note, scaleIndex, count);
+        toneService.updateSequenceAtIndex(note, scaleIndex, count);
         toneService.playSequence();
+        const { octave, sequence, scale } = toneService;
+        setUiState({
+            octave,
+            sequence,
+            scale
+        })
     }
 
     return (
