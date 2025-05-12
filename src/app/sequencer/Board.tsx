@@ -2,7 +2,7 @@
 
 import { v4 as uuid } from "uuid";
 import dynamic from "next/dynamic";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { ToneServiceContext } from "../ToneServiceContext";
 import InstrumentSelect from "./InstrumentSelect";
 
@@ -35,7 +35,11 @@ export default function Board(){
         sequence: toneService.sequence,
         scale: toneService.scale
     })
-
+   
+    console.log(toneService.beatDispatcherMap);
+    useEffect(()=> {
+        toneService.updateBeatUI();
+    }, [])
     return (
         <div className="flex border-black border-[2px] border-solid rounded-xl shadow-md" style={{userSelect: "none"}}>
             <DynamicToneServiceContextProvider contextValue={toneService}>

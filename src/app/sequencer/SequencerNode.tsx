@@ -6,9 +6,9 @@ import { ToneServiceContext } from "../ToneServiceContext";
 import { UiState } from "./Board";
 
 
-export default function SequencerNode( { note, active, count, scaleIndex, setUiState } : {
+export default function SequencerNode( { note, nodeIsActive, count, scaleIndex, setUiState } : {
     note: string, 
-    active: boolean,
+    nodeIsActive: boolean,
     count: number,
     scaleIndex: number,
     setUiState: Dispatch<SetStateAction<UiState>>  
@@ -19,7 +19,7 @@ export default function SequencerNode( { note, active, count, scaleIndex, setUiS
     const { toneService } = useContext(ToneServiceContext);
 
     function handleMouseOver(e: SyntheticEvent){
-        if(active) return;
+        if(nodeIsActive) return;
         setIsHovered(true);
     }
 
@@ -31,15 +31,19 @@ export default function SequencerNode( { note, active, count, scaleIndex, setUiS
         toneService.updateSequenceAtIndex(note, scaleIndex, count);
         toneService.playSequence();
         const { octave, sequence, scale } = toneService;
-        setUiState({
-            octave,
-            sequence,
-            scale
-        })
+        setUiState(state => {
+            return {
+                ...state,
+                octave,
+                sequence,
+                scale
+                }
+            }
+        )
     }
 
     return (
-        <div className={`border-black border border-solid ${isHovered && "bg-white"} ${active && "bg-primary"} cursor-pointer p-[20px]`} 
+        <div className={`border-black border border-solid ${isHovered && "bg-white"} ${nodeIsActive && "bg-primary"} cursor-pointer p-[20px]`} 
             onMouseEnter={handleMouseOver} 
             onMouseLeave={handleMouseLeave}
             onClick={handleNodeClick}></div>

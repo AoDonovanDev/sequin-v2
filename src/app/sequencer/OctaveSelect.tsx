@@ -13,10 +13,11 @@ export default function OctaveSelect( { setUiState }: {setUiState: Dispatch<SetS
         const target = event.target as HTMLInputElement
         const newOctaveValue = parseInt(target.value);
         toneService.setOctave(newOctaveValue)
-        setUiState(() => {
+        setUiState((state) => {
             const {octave, scale, sequence} = toneService;
             console.log(octave,scale,sequence);
             return {
+                ...state,
                 octave,
                 scale,
                 sequence
