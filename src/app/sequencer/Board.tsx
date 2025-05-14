@@ -36,7 +36,6 @@ export default function Board(){
         scale: toneService.scale
     })
    
-    console.log(toneService.beatDispatcherMap);
     useEffect(()=> {
         toneService.updateBeatUI();
     }, [])
