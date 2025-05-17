@@ -1,6 +1,6 @@
 'use client';
 
-import { Dispatch, SetStateAction, SyntheticEvent, useState } from "react";
+import { Dispatch, SetStateAction, SyntheticEvent, useEffect, useRef, useState } from "react";
 import { useContext } from "react";
 import { ToneServiceContext } from "../ToneServiceContext";
 import { UiState } from "./Board";
@@ -27,7 +27,8 @@ export default function SequencerNode( { note, nodeIsActive, count, scaleIndex, 
         setIsHovered(false);
     }    
 
-    function handleNodeClick(){
+    async function handleNodeClick(){
+        await toneService.start();
         toneService.updateSequenceAtIndex(note, scaleIndex, count);
         toneService.playSequence();
         const { octave, sequence, scale } = toneService;
@@ -42,8 +43,16 @@ export default function SequencerNode( { note, nodeIsActive, count, scaleIndex, 
         )
     }
 
+    const elRef = useRef<HTMLDivElement>(null);
+
+    useEffect(()=> {
+        if(elRef.current){           
+            toneService.nodeWidth = elRef.current.getClientRects()[0].width;
+        }
+    }, [])
+
     return (
-        <div className={`border-black border border-solid ${isHovered && "bg-white"} ${nodeIsActive && "bg-primary"} cursor-pointer p-[20px]`} 
+        <div ref={elRef} className={`border-black border border-solid ${isHovered && "bg-white"} ${nodeIsActive && "bg-primary"} cursor-pointer p-[20px]`} 
             onMouseEnter={handleMouseOver} 
             onMouseLeave={handleMouseLeave}
             onClick={handleNodeClick}></div>

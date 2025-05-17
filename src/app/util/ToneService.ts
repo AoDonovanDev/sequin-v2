@@ -20,9 +20,10 @@ export class ToneService{
 
     activeBeat: number;
 
-    beatDispatcherMap: {
-        [key: number]: Dispatch<SetStateAction<ActiveBeat>>
-    }
+    beatOverlayDispatch!: Dispatch<SetStateAction<number>>;
+
+    nodeWidth: number = 0; 
+    
 
     activeBeatLoop?: Tone.Loop;
 
@@ -33,26 +34,22 @@ export class ToneService{
         this.scale = this.scaleConstructor(scaleName);
         this.scaleName = scaleName;
         this.activeBeat = 0;
-        this.beatDispatcherMap = {};
     }
-
-    updateBeatUI(){
+    
+    updateBeatOverlay(){
         if(!this.activeBeatLoop){
             this.activeBeatLoop = new Tone.Loop(() => {
                 this.activeBeat++;
                 if(this.activeBeat>15){
-                    this.beatDispatcherMap[15](this.activeBeat);
+                    this.beatOverlayDispatch(0)
                     this.activeBeat = 0;
+                } else {
+                    this.beatOverlayDispatch(c => c+this.nodeWidth);
                 }
-                if(this.activeBeat > 0){
-                    this.beatDispatcherMap[this.activeBeat-1](this.activeBeat);
-                }
-                this.beatDispatcherMap[this.activeBeat](this.activeBeat);
-            }, "8n").start(0)
+            }, "8n").start(0);
         }
-        
     }
-    
+
     updateSequenceAtIndex(note: string, scaleIndex: number, index: number): void{
         if(this.sequence[index]==note){
             this.sequence[index] = null;
@@ -60,24 +57,20 @@ export class ToneService{
             this.sequence[index] = this.scale[scaleIndex];
         }
         console.log(this.sequence);
-        console.log(this.currentSequence);
     }
 
-    playSequence(){
+    playSequence(){    
+        console.log(Tone.getContext().state)
         if(!this.currentSequence){
             this.currentSequence = new Tone.Sequence( (time, note) => {
-               const now = Tone.immediate();
-               this.instance.triggerAttackRelease(note!, ".1", now, 1);
+               const now = Tone.now();
+               this.instance.triggerAttackRelease(note!, "64n", now);
             }, this.sequence, "8n");
             this.currentSequence.start();
         } else {
             this.currentSequence.events = this.sequence;
         }
-        if(Tone.getTransport().state=='stopped' || Tone.getTransport().state=='paused'){
-            Tone.getTransport().start();
-
-        }
-        
+        console.log(this.currentSequence)
     }
 
     setOctave(num: number){
@@ -121,4 +114,11 @@ export class ToneService{
         return this.activeBeat;
     }
 
+    async start(){
+        if(Tone.getTransport().state=='stopped' || Tone.getTransport().state=='paused'){
+            await Tone.start();
+            Tone.getTransport().start(0);
+        } 
+        console.log(1)
+    }
 }

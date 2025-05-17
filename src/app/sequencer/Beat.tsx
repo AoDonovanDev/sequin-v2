@@ -20,15 +20,9 @@ export default function Beat( { count, scale, sequence, setUiState} : {
     setUiState: Dispatch<SetStateAction<UiState>>
 }){
 
-    const { toneService } = useContext(ToneServiceContext);
-    const [activeBeat, setActiveBeat] = useState<ActiveBeat>(toneService.activeBeat);
-    useEffect(()=>{
-        toneService.beatDispatcherMap[count] = setActiveBeat;
-    })
-
     return(
-        <div className={`grid rounded-xl ${count % 4 == 0 && "bg-gray-300"} ${activeBeat==count && "outline outline-offset-1 outline-amber-600" }`}>
-            <div className="bg-base-100">{count}</div> 
+        <div className={`grid rounded-xl ${count % 4 == 0 && "bg-gray-300"}  z-10`}>
+            
             {scale.map( (n, index) => <SequencerNode key={uuid()} note={n} nodeIsActive={sequence[count]==n} count={count} scaleIndex={index} setUiState={setUiState}/>)}
         </div>       
     )

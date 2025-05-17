@@ -5,6 +5,7 @@ import dynamic from "next/dynamic";
 import { useContext, useEffect, useRef, useState } from "react";
 import { ToneServiceContext } from "../ToneServiceContext";
 import InstrumentSelect from "./InstrumentSelect";
+import BeatOverlay from "./BeatOverlay";
 
 const DynamicToneServiceContextProvider = dynamic(() => import("../ToneServiceContext"), {
     ssr: false
@@ -35,20 +36,22 @@ export default function Board(){
         sequence: toneService.sequence,
         scale: toneService.scale
     })
-   
+
     useEffect(()=> {
-        toneService.updateBeatUI();
+        toneService.updateBeatOverlay()
     }, [])
+
     return (
         <div className="flex border-black border-[2px] border-solid rounded-xl shadow-md" style={{userSelect: "none"}}>
             <DynamicToneServiceContextProvider contextValue={toneService}>
-            <>
+            <div className="flex relative">
+                <BeatOverlay width={0} />
                 {beats.map(b => <DynamicBeat key={uuid()} count={b} scale={uiState.scale} sequence={uiState.sequence} setUiState={setUiState} />)}
                 <div className='flex flex-col'>
                     <DynamicOctaveSelect setUiState={setUiState}/>
                     <InstrumentSelect />
                 </div>
-            </>
+            </div>
             </DynamicToneServiceContextProvider>
         </div>
     )
