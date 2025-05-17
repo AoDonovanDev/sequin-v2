@@ -41,8 +41,12 @@ export default function Board(){
         toneService.updateBeatOverlay()
     }, [])
 
+    function togglePlay(){
+        toneService.togglePlay();
+    }
+
     return (
-        <div className="flex border-black border-[2px] border-solid rounded-xl shadow-md" style={{userSelect: "none"}}>
+        <div className="flex border-black border-[2px] border-solid rounded-xl shadow-md pr-[20px]" style={{userSelect: "none"}}>
             <DynamicToneServiceContextProvider contextValue={toneService}>
             <div className="flex relative">
                 <BeatOverlay width={0} />
@@ -51,6 +55,7 @@ export default function Board(){
                     <DynamicOctaveSelect setUiState={setUiState}/>
                     <InstrumentSelect />
                 </div>
+                <button className="btn btn-success" onClick={togglePlay}>play/pause</button>
             </div>
             </DynamicToneServiceContextProvider>
         </div>

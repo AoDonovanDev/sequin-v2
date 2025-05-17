@@ -120,4 +120,12 @@ export class ToneService{
             Tone.getTransport().start(0);
         } 
     }
+
+    togglePlay(){
+        if(Tone.getTransport().state=='stopped' || Tone.getTransport().state=='paused'){
+            Tone.getTransport().start();
+        } else {
+            Tone.getTransport().pause();
+        }
+    }
 }

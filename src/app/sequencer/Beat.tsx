@@ -22,7 +22,6 @@ export default function Beat( { count, scale, sequence, setUiState} : {
 
     return(
         <div className={`grid rounded-xl ${count % 4 == 0 && "bg-gray-300"}  z-10`}>
-            <div>{count}</div>
             {scale.map( (n, index) => <SequencerNode key={uuid()} note={n} nodeIsActive={sequence[count]==n} count={count} scaleIndex={index} setUiState={setUiState}/>)}
         </div>       
     )
