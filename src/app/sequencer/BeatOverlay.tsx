@@ -8,6 +8,7 @@ export default function BeatOverlay({width} : {width: number}){
     const [offset, setOffset] = useState<number>(0);
 
     const { toneService } = useContext(ToneServiceContext);
+    
     useEffect(()=> {
         toneService.beatOverlayDispatch = setOffset;
         if(elRef.current){
@@ -15,8 +16,17 @@ export default function BeatOverlay({width} : {width: number}){
         }   
     }, [offset])
 
+    useEffect(()=> {
+        if(elRef.current){
+            const width = toneService.nodeWidth.toString();
+            console.log(width)
+            elRef.current.style.width=width+"px";
+            console.log(elRef.current.style.width)
+        }
+    }, [])
+
     return (
-        <div ref={elRef} className="outline outline-offset-1 outline-amber-600 rounded h-full w-[42px] absolute z-0">
+        <div ref={elRef} className="outline outline-offset-1 outline-amber-600 rounded h-full absolute z-0">
 
         </div>
     )
