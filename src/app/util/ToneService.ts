@@ -119,6 +119,5 @@ export class ToneService{
             await Tone.start();
             Tone.getTransport().start(0);
         } 
-        console.log(1)
     }
 }
