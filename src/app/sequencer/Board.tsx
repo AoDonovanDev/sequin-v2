@@ -55,8 +55,8 @@ export default function Board(){
     }
 
     return (
-        <div className="flex border-black border-[2px] border-solid rounded-xl shadow-md pr-[20px]" style={{userSelect: "none"}}>
-            <DynamicToneServiceContextProvider contextValue={toneService}>
+        <div className="border-black border-[2px] border-solid rounded-xl shadow-md pr-[20px]" style={{userSelect: "none"}}>
+            {/* <DynamicToneServiceContextProvider contextValue={toneService}> */}
             <div className="flex relative">
                 <BeatOverlay width={0} />
                 {beats.map(b => <DynamicBeat key={uuid()} count={b} scale={uiState.scale} sequence={uiState.sequence} setUiState={setUiState} />)}
@@ -69,7 +69,7 @@ export default function Board(){
                     <button className="btn btn-error" onClick={stopClear}>stop/clear</button>
                 </div>
             </div>
-            </DynamicToneServiceContextProvider>
+            {/* </DynamicToneServiceContextProvider> */}
         </div>
     )
 }

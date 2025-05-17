@@ -1,8 +1,7 @@
 import * as Tone from "tone";
 import { scaleMap } from "./scaleMap";
 import { Dispatch, SetStateAction } from "react";
-import { UiState } from "../sequencer/Board";
-import { ActiveBeat } from "../sequencer/Beat";
+import { v4 as uuid } from "uuid";
 
 export class ToneService{
 
@@ -18,13 +17,14 @@ export class ToneService{
 
     currentSequence: Tone.Sequence;
 
-    activeBeat: number;
+    activeBeat: number = 0;
 
     beatOverlayDispatch!: Dispatch<SetStateAction<number>>;
 
     nodeWidth: number = 0; 
-    
 
+    id = uuid();
+    
     activeBeatLoop?: Tone.Loop;
 
     constructor(scaleName: string){
@@ -37,21 +37,26 @@ export class ToneService{
         this.currentSequence = new Tone.Sequence( (time, note) => {
                const now = Tone.now();
                this.instance.triggerAttackRelease(note!, "64n", now);
-            }, this.sequence, "8n");
+            }, this.sequence, "4n");
     }
     
     updateBeatOverlay(){
+        //this.activeBeat = Math.floor(Tone.now()*4)%16;
         if(!this.activeBeatLoop){
             this.activeBeatLoop = new Tone.Loop(() => {
                 this.activeBeat++;
-                console.log()
+                console.log("the beat: ", this.activeBeat);
+                //console.log(Math.floor(Tone.now()*4)%16);
                 if(this.activeBeat>15){
-                    this.beatOverlayDispatch(0)
+                    this.beatOverlayDispatch(c => c+this.nodeWidth);
                     this.activeBeat = 0;
+                } else if(this.activeBeat==1){
+                    this.beatOverlayDispatch(0);
                 } else {
+                    console.log("beat 15 should be here")
                     this.beatOverlayDispatch(c => c+this.nodeWidth);
                 }
-            }, "8n").start(0);
+            }, "4n").start(0);
         }
     }
 
@@ -61,7 +66,7 @@ export class ToneService{
         } else {
             this.sequence[index] = this.scale[scaleIndex];
         }
-        console.log(this.sequence);
+        console.log("here's my id: ", this.id);
     }
 
     playSequence(){    
@@ -114,8 +119,9 @@ export class ToneService{
 
     async start(){
         if(Tone.getTransport().state=='stopped'){
-            await Tone.start();
-            Tone.getTransport().start().nextSubdivision("8n");
+            console.log("heyyyyyyyyyyyy");
+            Tone.start().then(resolve => Tone.getTransport().start());
+            
         } 
     }
 

@@ -5,9 +5,11 @@ export default function BeatOverlay({width} : {width: number}){
 
     const elRef = useRef<HTMLDivElement>(null);
 
+    const { toneService } = useContext(ToneServiceContext);
+
     const [offset, setOffset] = useState<number>(0);
 
-    const { toneService } = useContext(ToneServiceContext);
+    
     
     //register setoffset dispatch function to toneservice to be used in callback loop, render current position based on offset state
     useEffect(()=> {
