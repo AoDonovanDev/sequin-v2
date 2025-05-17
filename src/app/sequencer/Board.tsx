@@ -55,7 +55,10 @@ export default function Board(){
                     <DynamicOctaveSelect setUiState={setUiState}/>
                     <InstrumentSelect />
                 </div>
-                <button className="btn btn-success" onClick={togglePlay}>play/pause</button>
+                <div className="flex flex-col">
+                    <button className="btn btn-success" onClick={togglePlay}>play/pause</button>
+                    <button className="btn btn-error">stop/clear</button>
+                </div>
             </div>
             </DynamicToneServiceContextProvider>
         </div>

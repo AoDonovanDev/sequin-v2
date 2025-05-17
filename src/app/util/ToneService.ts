@@ -16,7 +16,7 @@ export class ToneService{
 
     scaleName: string;
 
-    currentSequence?: Tone.Sequence;
+    currentSequence: Tone.Sequence;
 
     activeBeat: number;
 
@@ -34,12 +34,17 @@ export class ToneService{
         this.scale = this.scaleConstructor(scaleName);
         this.scaleName = scaleName;
         this.activeBeat = 0;
+        this.currentSequence = new Tone.Sequence( (time, note) => {
+               const now = Tone.now();
+               this.instance.triggerAttackRelease(note!, "64n", now);
+            }, this.sequence, "8n");
     }
     
     updateBeatOverlay(){
         if(!this.activeBeatLoop){
             this.activeBeatLoop = new Tone.Loop(() => {
                 this.activeBeat++;
+                console.log()
                 if(this.activeBeat>15){
                     this.beatOverlayDispatch(0)
                     this.activeBeat = 0;
@@ -60,19 +65,9 @@ export class ToneService{
     }
 
     playSequence(){    
-        console.log(Tone.getContext().state)
-        if(!this.currentSequence){
-            this.currentSequence = new Tone.Sequence( (time, note) => {
-               const now = Tone.now();
-               console.log(this.activeBeatLoop?.progress);
-               console.log(this.currentSequence?.progress);
-               this.instance.triggerAttackRelease(note!, "64n", now);
-            }, this.sequence, "8n");
-            this.currentSequence.start();
-        } else {
-            this.currentSequence.events = this.sequence;
-        }
-        console.log(this.currentSequence)
+        this.currentSequence.events = this.sequence;
+        this.currentSequence.start(0);
+        
     }
 
     setOctave(num: number){
@@ -117,9 +112,9 @@ export class ToneService{
     }
 
     async start(){
-        if(Tone.getTransport().state=='stopped' || Tone.getTransport().state=='paused'){
+        if(Tone.getTransport().state=='stopped'){
             await Tone.start();
-            Tone.getTransport().start(0);
+            Tone.getTransport().start().nextSubdivision("8n");
         } 
     }
 
