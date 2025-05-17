@@ -45,6 +45,15 @@ export default function Board(){
         toneService.togglePlay();
     }
 
+    function stopClear(){
+        toneService.stopClear();
+        setUiState({
+            octave: toneService.octave,
+            sequence: toneService.sequence,
+            scale: toneService.scale
+        })
+    }
+
     return (
         <div className="flex border-black border-[2px] border-solid rounded-xl shadow-md pr-[20px]" style={{userSelect: "none"}}>
             <DynamicToneServiceContextProvider contextValue={toneService}>
@@ -57,7 +66,7 @@ export default function Board(){
                 </div>
                 <div className="flex flex-col">
                     <button className="btn btn-success" onClick={togglePlay}>play/pause</button>
-                    <button className="btn btn-error">stop/clear</button>
+                    <button className="btn btn-error" onClick={stopClear}>stop/clear</button>
                 </div>
             </div>
             </DynamicToneServiceContextProvider>

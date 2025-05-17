@@ -67,6 +67,7 @@ export class ToneService{
     playSequence(){    
         this.currentSequence.events = this.sequence;
         this.currentSequence.start(0);
+        console.log(this.sequence);
         
     }
 
@@ -124,5 +125,13 @@ export class ToneService{
         } else {
             Tone.getTransport().pause();
         }
+    }
+
+    stopClear(){
+        Tone.getTransport().stop();
+        this.sequence = new Array(16).fill(null);
+        this.activeBeat = 0;
+        this.currentSequence.clear();
+        this.beatOverlayDispatch(0);
     }
 }
