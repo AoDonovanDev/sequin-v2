@@ -35,9 +35,10 @@ export class ToneService{
         this.scaleName = scaleName;
         this.activeBeat = 0;
         this.currentSequence = new Tone.Sequence( (time, note) => {
+              // console.log('sequence callback: ', this.currentSequence?.progress*16);
                const now = Tone.now();
                this.instance.triggerAttackRelease(note!, "64n", now);
-            }, this.sequence, "4n");
+            }, this.sequence, "8n");
     }
     
     updateBeatOverlay(){
@@ -45,18 +46,16 @@ export class ToneService{
         if(!this.activeBeatLoop){
             this.activeBeatLoop = new Tone.Loop(() => {
                 this.activeBeat++;
-                console.log("the beat: ", this.activeBeat);
-                //console.log(Math.floor(Tone.now()*4)%16);
+                console.log('loop callback: ', this.activeBeatLoop && this.activeBeatLoop.progress*16)
                 if(this.activeBeat>15){
                     this.beatOverlayDispatch(c => c+this.nodeWidth);
                     this.activeBeat = 0;
                 } else if(this.activeBeat==1){
                     this.beatOverlayDispatch(0);
                 } else {
-                    console.log("beat 15 should be here")
                     this.beatOverlayDispatch(c => c+this.nodeWidth);
                 }
-            }, "4n").start(0);
+            }, "8n").start(0);
         }
     }
 
@@ -66,14 +65,11 @@ export class ToneService{
         } else {
             this.sequence[index] = this.scale[scaleIndex];
         }
-        console.log("here's my id: ", this.id);
     }
 
     playSequence(){    
         this.currentSequence.events = this.sequence;
-        this.currentSequence.start(0);
-        console.log(this.sequence);
-        
+        this.currentSequence.start(0);        
     }
 
     setOctave(num: number){
@@ -119,7 +115,6 @@ export class ToneService{
 
     async start(){
         if(Tone.getTransport().state=='stopped'){
-            console.log("heyyyyyyyyyyyy");
             Tone.start().then(resolve => Tone.getTransport().start());
             
         } 
