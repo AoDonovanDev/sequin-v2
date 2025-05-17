@@ -64,6 +64,8 @@ export class ToneService{
         if(!this.currentSequence){
             this.currentSequence = new Tone.Sequence( (time, note) => {
                const now = Tone.now();
+               console.log(this.activeBeatLoop?.progress);
+               console.log(this.currentSequence?.progress);
                this.instance.triggerAttackRelease(note!, "64n", now);
             }, this.sequence, "8n");
             this.currentSequence.start();
@@ -123,7 +125,7 @@ export class ToneService{
 
     togglePlay(){
         if(Tone.getTransport().state=='stopped' || Tone.getTransport().state=='paused'){
-            Tone.getTransport().start();
+            Tone.getTransport().start().nextSubdivision("8n");
         } else {
             Tone.getTransport().pause();
         }
