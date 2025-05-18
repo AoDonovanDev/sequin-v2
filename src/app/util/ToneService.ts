@@ -17,9 +17,7 @@ export class ToneService{
 
     currentSequence: Tone.Sequence;
 
-    activeBeat: number = 0;
-
-    beatOverlayDispatch!: Dispatch<SetStateAction<number>>;
+    beatOverlayDispatch!: Dispatch<SetStateAction<number | null>>;
 
     nodeWidth: number = 0; 
 
@@ -27,7 +25,7 @@ export class ToneService{
     
     activeBeatLoop?: Tone.Loop;
 
-    transportProgress?: number;
+    transportProgress: number = Math.floor(Tone.getTransport().progress*16);
 
     constructor(scaleName: string){
         this.instance = new Tone.Synth().toDestination();
@@ -43,20 +41,11 @@ export class ToneService{
     }
     
     updateBeatOverlay(){
-        //this.activeBeat = Math.floor(Tone.now()*4)%16;
         if(!this.activeBeatLoop){
             this.activeBeatLoop = new Tone.Loop(() => {
-                console.log("active beat in overlay effect: ", this.activeBeat, this.id)
-                this.activeBeat++;
-                //console.log('transport loop progress in overlay callback: ', Math.floor(Tone.getTransport().progress*16));
-                if(this.activeBeat>15){
-                    this.beatOverlayDispatch(c => c+this.nodeWidth);
-                    this.activeBeat = 0;
-                } else if(this.activeBeat==1){
-                    this.beatOverlayDispatch(0);
-                } else {
-                    this.beatOverlayDispatch(c => c+this.nodeWidth);
-                }
+                const trasportProgress =  Math.floor(Tone.getTransport().progress*16);
+                this.transportProgress = trasportProgress;
+                this.beatOverlayDispatch(offset => this.nodeWidth*trasportProgress);
             }, "8n").start(0);
         }
     }
@@ -111,10 +100,6 @@ export class ToneService{
         this.instance = new Tone.Synth().toDestination()
     }
 
-    getActiveBeat(){
-        return this.activeBeat;
-    }
-
     async start(){
         if(Tone.getTransport().state=='stopped'){
             Tone.start().then(resolve => Tone.getTransport().start());
@@ -133,7 +118,6 @@ export class ToneService{
     stopClear(){
         Tone.getTransport().stop();
         this.sequence = new Array(16).fill(null);
-        this.activeBeat = 0;
         this.currentSequence.clear();
         this.beatOverlayDispatch(0);
     }

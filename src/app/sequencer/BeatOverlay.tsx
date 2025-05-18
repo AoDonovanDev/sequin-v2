@@ -7,8 +7,8 @@ export default function BeatOverlay({width} : {width: number}){
 
     const { toneService } = useContext(ToneServiceContext);
 
-    const [offset, setOffset] = useState<number>(toneService.activeBeat);
-
+    const [offset, setOffset] = useState<number | null>(null);
+    console.log('offset in overlay: ', offset, elRef.current);
     
     
     //register setoffset dispatch function to toneservice to be used in callback loop, render current position based on offset state
@@ -28,7 +28,7 @@ export default function BeatOverlay({width} : {width: number}){
     }, [])
 
     return (
-        <div ref={elRef} className="outline outline-offset-1 outline-amber-600 rounded h-full absolute z-0">
+        <div ref={elRef} className={typeof offset == 'number' ? "outline outline-offset-1 outline-amber-600 rounded h-full absolute z-0" : "rounded h-full absolute z-0"}>
 
         </div>
     )
