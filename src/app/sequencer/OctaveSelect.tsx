@@ -15,7 +15,6 @@ export default function OctaveSelect( { setUiState }: {setUiState: Dispatch<SetS
         toneService.setOctave(newOctaveValue)
         setUiState((state) => {
             const {octave, scale, sequence} = toneService;
-            console.log(octave,scale,sequence);
             return {
                 ...state,
                 octave,

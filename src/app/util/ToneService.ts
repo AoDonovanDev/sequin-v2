@@ -25,6 +25,7 @@ export class ToneService{
     
     activeBeatLoop?: Tone.Loop;
 
+    //loop progress values are from 0-1, so it's multipled by 16 and floored to match values for a 16 note sequence
     transportProgress: number = Math.floor(Tone.getTransport().progress*16);
 
     constructor(scaleName: string){
@@ -34,7 +35,6 @@ export class ToneService{
         this.scale = this.scaleConstructor(scaleName);
         this.scaleName = scaleName;
         this.currentSequence = new Tone.Sequence( (time, note) => {
-              // console.log('sequence callback: ', this.currentSequence?.progress*16);
                const now = Tone.now();
                this.instance.triggerAttackRelease(note!, "64n", now);
             }, this.sequence, "8n");
