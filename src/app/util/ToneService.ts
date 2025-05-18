@@ -27,13 +27,14 @@ export class ToneService{
     
     activeBeatLoop?: Tone.Loop;
 
+    transportProgress?: number;
+
     constructor(scaleName: string){
         this.instance = new Tone.Synth().toDestination();
         this.sequence = new Array(16).fill(null);
         this.octave = 2;
         this.scale = this.scaleConstructor(scaleName);
         this.scaleName = scaleName;
-        this.activeBeat = 0;
         this.currentSequence = new Tone.Sequence( (time, note) => {
               // console.log('sequence callback: ', this.currentSequence?.progress*16);
                const now = Tone.now();
@@ -45,8 +46,9 @@ export class ToneService{
         //this.activeBeat = Math.floor(Tone.now()*4)%16;
         if(!this.activeBeatLoop){
             this.activeBeatLoop = new Tone.Loop(() => {
+                console.log("active beat in overlay effect: ", this.activeBeat, this.id)
                 this.activeBeat++;
-                console.log('loop callback: ', this.activeBeatLoop && this.activeBeatLoop.progress*16)
+                //console.log('transport loop progress in overlay callback: ', Math.floor(Tone.getTransport().progress*16));
                 if(this.activeBeat>15){
                     this.beatOverlayDispatch(c => c+this.nodeWidth);
                     this.activeBeat = 0;

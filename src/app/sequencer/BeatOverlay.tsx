@@ -7,7 +7,7 @@ export default function BeatOverlay({width} : {width: number}){
 
     const { toneService } = useContext(ToneServiceContext);
 
-    const [offset, setOffset] = useState<number>(0);
+    const [offset, setOffset] = useState<number>(toneService.activeBeat);
 
     
     
@@ -23,7 +23,7 @@ export default function BeatOverlay({width} : {width: number}){
     useEffect(()=> {
         if(elRef.current){
             const width = toneService.nodeWidth.toString();
-            elRef.current.style.width=width+"px";
+            elRef.current.style.width=`${width}px`;
         }
     }, [])
 
