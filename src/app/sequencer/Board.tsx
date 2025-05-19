@@ -55,7 +55,7 @@ export default function Board(){
     }
 
     return (
-        <div className="border-black border-[2px] border-solid rounded-xl shadow-md pr-[20px]" style={{userSelect: "none"}}>
+        <div className="border-black border-[2px] border-solid rounded-xl shadow-md pr-[20px] mb-[20px]" style={{userSelect: "none"}}>
             {/* <DynamicToneServiceContextProvider contextValue={toneService}> */}
             <div className="flex relative">
                 <BeatOverlay width={0} />
