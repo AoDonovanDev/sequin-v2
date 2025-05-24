@@ -49,7 +49,7 @@ export default function Board(){
     }
 
     return (
-        <div className="border-black border-[2px] border-solid rounded-xl shadow-md pr-[20px] mb-[20px]" style={{userSelect: "none"}}>
+        <div className="border-black border-[1px] border-solid rounded shadow-md pr-[20px] mb-[20px]" style={{userSelect: "none"}}>
             <div className="flex relative">
                 <BeatOverlay />
                 {uiState.sequence.map((n, i) => <DynamicBeat key={uuid()} count={i} scale={uiState.scale} sequence={uiState.sequence} setUiState={setUiState} />)}

@@ -5,7 +5,7 @@ import { v4 as uuid } from "uuid";
 
 export class ToneService{
 
-    instance: Tone.Synth<Tone.SynthOptions> | Tone.DuoSynth | Tone.AMSynth;
+    instrument: Tone.Synth<Tone.SynthOptions> | Tone.DuoSynth | Tone.AMSynth;
 
     sequence: (string | null)[];
 
@@ -29,14 +29,14 @@ export class ToneService{
     transportProgress: number = Math.floor(Tone.getTransport().progress*16);
 
     constructor(scaleName: string){
-        this.instance = new Tone.Synth().toDestination();
+        this.instrument = new Tone.Synth().toDestination();
         this.sequence = new Array(16).fill(null);
         this.octave = 2;
         this.scale = this.scaleConstructor(scaleName);
         this.scaleName = scaleName;
         this.currentSequence = new Tone.Sequence( (time, note) => {
                const now = Tone.now();
-               this.instance.triggerAttackRelease(note!, "64n", now);
+               this.instrument.triggerAttackRelease(note!, "64n", now);
             }, this.sequence, "8n");
 
     }
@@ -87,18 +87,18 @@ export class ToneService{
     }
 
     setDuoSynth(){
-        this.instance.dispose();
-        this.instance = new Tone.DuoSynth().toDestination();
+        this.instrument.dispose();
+        this.instrument = new Tone.DuoSynth().toDestination();
     }
 
     setAMSynth(){
-        this.instance.dispose();
-        this.instance = new Tone.AMSynth().toDestination();
+        this.instrument.dispose();
+        this.instrument = new Tone.AMSynth().toDestination();
     }
 
     setSynth(){
-        this.instance.dispose();
-        this.instance = new Tone.Synth().toDestination()
+        this.instrument.dispose();
+        this.instrument = new Tone.Synth().toDestination()
     }
 
     async start(){
