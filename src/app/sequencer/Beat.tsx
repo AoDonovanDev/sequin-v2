@@ -19,7 +19,14 @@ export default function Beat( { count, scale, sequence, setUiState} : {
 }){
     return(
         <div className={`grid rounded-xl ${count % 4 == 0 && "bg-gray-300"}  z-10`}>
-            {scale.map( (n, index) => <SequencerNode key={uuid()} note={n} nodeIsActive={sequence[count]==n} count={count} scaleIndex={index} setUiState={setUiState}/>)}
+            {scale.map( (n, index) => <SequencerNode 
+                                        key={uuid()} 
+                                        note={n} 
+                                        nodeIsActive={sequence[count]==n} 
+                                        count={count} 
+                                        scaleIndex={index} 
+                                        setUiState={setUiState} 
+                                        isReferenceNode={count==1 && index==0}/>)}
         </div>       
     )
 }

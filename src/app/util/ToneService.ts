@@ -38,6 +38,7 @@ export class ToneService{
                const now = Tone.now();
                this.instance.triggerAttackRelease(note!, "64n", now);
             }, this.sequence, "8n");
+
     }
     
     updateBeatOverlay(){
@@ -103,7 +104,6 @@ export class ToneService{
     async start(){
         if(Tone.getTransport().state=='stopped'){
             Tone.start().then(resolve => Tone.getTransport().start());
-            
         } 
     }
 

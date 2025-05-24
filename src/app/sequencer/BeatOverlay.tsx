@@ -1,7 +1,7 @@
 import { useContext, useEffect, useRef, useState } from "react"
 import { ToneServiceContext } from "../ToneServiceContext"
 
-export default function BeatOverlay({width} : {width: number}){
+export default function BeatOverlay(){
 
     const elRef = useRef<HTMLDivElement>(null);
 

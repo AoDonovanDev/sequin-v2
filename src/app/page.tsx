@@ -1,12 +1,9 @@
 'use client'
 
-import { ComponentType, createContext, useContext, useEffect, useState } from "react";
-import Board from "./sequencer/Board";
+import { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
 import { v4 as uuid } from "uuid";
-import { ToneServiceContext } from "./ToneServiceContext";
 import { ToneService } from "./util/ToneService";
-import { getTransport } from "tone";
 
 export default function Home() {
 
@@ -19,10 +16,6 @@ export default function Home() {
     const DynamicBoard = dynamic(() => import("./sequencer/Board"), {
       ssr: false
       })
-    const transport = getTransport();
-
-    //configure transport here 
-    transport.loop = true; transport.loopStart = 0; transport.loopEnd = 4;
 
     setBoardList([
       <DynamicInitialToneServiceContext contextValue={new ToneService("major")} key={uuid()}>

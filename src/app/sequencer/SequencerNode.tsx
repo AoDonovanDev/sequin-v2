@@ -6,12 +6,13 @@ import { ToneServiceContext } from "../ToneServiceContext";
 import { UiState } from "./Board";
 
 
-export default function SequencerNode( { note, nodeIsActive, count, scaleIndex, setUiState } : {
+export default function SequencerNode( { note, nodeIsActive, count, scaleIndex, setUiState, isReferenceNode } : {
     note: string, 
     nodeIsActive: boolean,
     count: number,
     scaleIndex: number,
-    setUiState: Dispatch<SetStateAction<UiState>>  
+    setUiState: Dispatch<SetStateAction<UiState>>,
+    isReferenceNode: boolean  
 }){
 
     const [isHovered, setIsHovered] = useState(false);
@@ -46,7 +47,7 @@ export default function SequencerNode( { note, nodeIsActive, count, scaleIndex, 
     const elRef = useRef<HTMLDivElement>(null);
 
     useEffect(()=> {
-        if(elRef.current){           
+        if(elRef.current && isReferenceNode){         
             toneService.nodeWidth = elRef.current.getClientRects()[0].width;
         }
     }, [])

@@ -2,14 +2,10 @@
 
 import { v4 as uuid } from "uuid";
 import dynamic from "next/dynamic";
-import { useContext, useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { ToneServiceContext } from "../ToneServiceContext";
 import InstrumentSelect from "./InstrumentSelect";
 import BeatOverlay from "./BeatOverlay";
-
-const DynamicToneServiceContextProvider = dynamic(() => import("../ToneServiceContext"), {
-    ssr: false
-})
 
 const DynamicBeat = dynamic(() => import("./Beat"), {
     ssr: false
@@ -26,8 +22,6 @@ export interface UiState{
 }
 
 export default function Board(){
-    
-    const beats = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15];
 
     const { toneService } = useContext(ToneServiceContext);
     
@@ -56,10 +50,9 @@ export default function Board(){
 
     return (
         <div className="border-black border-[2px] border-solid rounded-xl shadow-md pr-[20px] mb-[20px]" style={{userSelect: "none"}}>
-            {/* <DynamicToneServiceContextProvider contextValue={toneService}> */}
             <div className="flex relative">
-                <BeatOverlay width={0} />
-                {beats.map(b => <DynamicBeat key={uuid()} count={b} scale={uiState.scale} sequence={uiState.sequence} setUiState={setUiState} />)}
+                <BeatOverlay />
+                {uiState.sequence.map((n, i) => <DynamicBeat key={uuid()} count={i} scale={uiState.scale} sequence={uiState.sequence} setUiState={setUiState} />)}
                 <div className='flex flex-col'>
                     <DynamicOctaveSelect setUiState={setUiState}/>
                     <InstrumentSelect />
@@ -69,7 +62,6 @@ export default function Board(){
                     <button className="btn btn-error" onClick={stopClear}>stop/clear</button>
                 </div>
             </div>
-            {/* </DynamicToneServiceContextProvider> */}
         </div>
     )
 }
