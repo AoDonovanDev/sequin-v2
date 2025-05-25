@@ -2,7 +2,7 @@
 
 import { v4 as uuid } from "uuid";
 import dynamic from "next/dynamic";
-import { useContext, useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useContext, useEffect, useState } from "react";
 import { ToneServiceContext } from "../ToneServiceContext";
 import InstrumentSelect from "./InstrumentSelect";
 import BeatOverlay from "./BeatOverlay";
@@ -21,7 +21,7 @@ export interface UiState{
     sequence: (string | null)[]
 }
 
-export default function Board(){
+export default function Board({testDelete} : {testDelete: Dispatch<SetStateAction<any>>}){
 
     const { toneService } = useContext(ToneServiceContext);
     
@@ -35,31 +35,28 @@ export default function Board(){
         toneService.updateBeatOverlay()
     }, [])
 
-    function togglePlay(){
-        toneService.togglePlay();
-    }
 
-    function stopClear(){
-        toneService.stopClear();
+    function clearSequence(){
+        toneService.clearSequence()
         setUiState({
-            octave: toneService.octave,
-            sequence: toneService.sequence,
-            scale: toneService.scale
+            ...uiState,
+            sequence: toneService.sequence
         })
     }
 
     return (
-        <div className="border-black border-[1px] border-solid rounded shadow-md pr-[20px] mb-[20px]" style={{userSelect: "none"}}>
+        <div className="border-black border-[1px] border-solid rounded-xl shadow-xl p-[20px] mb-[20px]" style={{userSelect: "none"}}>
+            
             <div className="flex relative">
                 <BeatOverlay />
                 {uiState.sequence.map((n, i) => <DynamicBeat key={uuid()} count={i} scale={uiState.scale} sequence={uiState.sequence} setUiState={setUiState} />)}
-                <div className='flex flex-col'>
+                <div className="flex flex-col items-center">
+                    <div className="flex">
+                        <button className="btn btn-accent w-3/4" onClick={clearSequence}>clear</button>
+                        <img src="close1.svg" className="btn btn-ghost p-0" onClick={testDelete}/>
+                    </div>
                     <DynamicOctaveSelect setUiState={setUiState}/>
                     <InstrumentSelect />
-                </div>
-                <div className="flex flex-col">
-                    <button className="btn btn-success" onClick={togglePlay}>play/pause</button>
-                    <button className="btn btn-error" onClick={stopClear}>stop/clear</button>
                 </div>
             </div>
         </div>

@@ -25,7 +25,7 @@ export default function OctaveSelect( { setUiState }: {setUiState: Dispatch<SetS
     }
 
     return (
-        <div style={{transform: "rotate(270deg)"}} className="relative top-[80px] h-[60px]">
+        <div style={{transform: "rotate(270deg)"}} className="h-[60px] mt-[60px]">
             <input type="range" min={1} max={4} defaultValue={2} className="range" step={1} onChange={handleOctaveSelect}/>
             <div className="flex justify-between px-2 text-xs">
                 <span>|</span>

@@ -107,6 +107,12 @@ export class ToneService{
         } 
     }
 
+    clearSequence(){
+        this.currentSequence.cancel();
+        this.currentSequence.clear();
+        this.sequence = new Array(16).fill(null);
+    }
+
     togglePlay(){
         if(Tone.getTransport().state=='stopped' || Tone.getTransport().state=='paused'){
             Tone.getTransport().start().nextSubdivision("8n");

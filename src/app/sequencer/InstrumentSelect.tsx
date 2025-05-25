@@ -8,11 +8,11 @@ export default function InstrumentSelect(){
     const { toneService } = useContext(ToneServiceContext);
 
     return(
-        <>
-        <button className='btn btn-primary relative top-[120px] w-3/4 self-center' onClick={()=>toneService.setSynth()}>synth</button>
-        <button className='btn btn-secondary relative top-[120px] w-3/4 self-center' onClick={()=>toneService.setAMSynth()}>AM synth</button>
-        <button className='btn btn-info relative top-[120px] w-3/4 self-center' onClick={()=>toneService.setDuoSynth()}>duo synth</button>
-        </>
+        <div className="flex flex-col mt-[60px]">
+            <button className="btn btn-primary" onClick={()=>toneService.setSynth()}>synth</button>
+            <button className="btn btn-secondary" onClick={()=>toneService.setAMSynth()}>AM synth</button>
+            <button className="btn btn-info" onClick={()=>toneService.setDuoSynth()}>duo synth</button>
+        </div>
     )
 
 }
