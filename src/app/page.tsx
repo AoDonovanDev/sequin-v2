@@ -1,13 +1,15 @@
 'use client'
 
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import dynamic from "next/dynamic";
 import { v4 as uuid } from "uuid";
 import { ToneService } from "./util/ToneService";
 import { getTransport } from "tone";
+import { GlobalBoardStateContext } from "./GlobalBoardStateContext";
+import { BoardRegistry } from "./util/BoardRegistry";
+import { initialSequenceValues } from "./util/constants";
 
 export default function Home() {
-
   const [boardList, setBoardList] = useState<React.JSX.Element[]>([]);
 
   const DynamicInitialToneServiceContext = dynamic(() => import("./ToneServiceContext"))
@@ -15,6 +17,7 @@ export default function Home() {
     ssr: false
   })
   
+  const { boardRegistry } = useContext(GlobalBoardStateContext);
 
   useEffect( () => {
     setBoardList([
@@ -25,6 +28,7 @@ export default function Home() {
   }, [])
 
   function addNewBoard(){
+     console.log(boardRegistry);
     setBoardList( [
       ...boardList,
       <DynamicInitialToneServiceContext contextValue={new ToneService("major")} key={uuid()}>
@@ -42,20 +46,13 @@ export default function Home() {
   }
   
   function stopClear(){
-      setBoardList(boardList.map( b =>
-        <DynamicInitialToneServiceContext contextValue={new ToneService("major")} key={uuid()}>
-          <DynamicBoard testDelete={testDelete}/>
-        </DynamicInitialToneServiceContext>)
-      );
-      getTransport().cancel();
       getTransport().stop();
+      boardRegistry.clearAndReset();
     }
   
 
   function testDelete(){
-     console.log("asdfasdfasdfhuhhhhhhhhhhhhhhhhhhhh: ")
      setBoardList(bl => {
-      console.log("huhhhhhhhhhhhhhhhhhhhh: ")
       const [...newList] = bl.filter((b,i)=>i>0);
 
       return newList;

@@ -3,7 +3,9 @@
 import { Dispatch, SetStateAction, SyntheticEvent, useEffect, useRef, useState } from "react";
 import { useContext } from "react";
 import { ToneServiceContext } from "../ToneServiceContext";
-import { UiState } from "./Board";
+import { UiState } from "../types/declarations";
+import { GlobalBoardStateContext } from "../GlobalBoardStateContext";
+import { initialSequenceValues } from "../util/constants";
 
 
 export default function SequencerNode( { note, nodeIsActive, count, scaleIndex, setUiState, isReferenceNode } : {

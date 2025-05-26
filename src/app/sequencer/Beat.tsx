@@ -3,7 +3,7 @@
 import { v4 as uuid } from "uuid";
 import { Dispatch, SetStateAction, use, useContext, useEffect, useState} from "react";
 import dynamic from "next/dynamic";
-import { UiState } from "./Board";
+import { UiState } from "../types/declarations";
 
 const SequencerNode = dynamic(() => import("./SequencerNode"), {
     ssr: false

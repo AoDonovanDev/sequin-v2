@@ -6,6 +6,7 @@ import { Dispatch, SetStateAction, useContext, useEffect, useState } from "react
 import { ToneServiceContext } from "../ToneServiceContext";
 import InstrumentSelect from "./InstrumentSelect";
 import BeatOverlay from "./BeatOverlay";
+import { GlobalBoardStateContext } from "../GlobalBoardStateContext";
 
 const DynamicBeat = dynamic(() => import("./Beat"), {
     ssr: false
@@ -15,15 +16,10 @@ const DynamicOctaveSelect = dynamic(() => import("./OctaveSelect"), {
     ssr: false
 });
 
-export interface UiState{
-    octave: number,
-    scale: string[],
-    sequence: (string | null)[]
-}
-
 export default function Board({testDelete} : {testDelete: Dispatch<SetStateAction<any>>}){
 
     const { toneService } = useContext(ToneServiceContext);
+    const { boardRegistry } = useContext(GlobalBoardStateContext);
     
     const [uiState, setUiState] = useState({
         octave: toneService.octave,
@@ -32,7 +28,15 @@ export default function Board({testDelete} : {testDelete: Dispatch<SetStateActio
     })
 
     useEffect(()=> {
-        toneService.updateBeatOverlay()
+        toneService.updateBeatOverlay();
+        if(!boardRegistry.boardIdSet.has(toneService.id)){
+            boardRegistry.boardIdSet.add(toneService.id);
+            boardRegistry.boardList.add({
+                id: toneService.id,
+                uiDispatch: setUiState,
+                toneService: toneService
+            })
+        }
     }, [])
 
 
@@ -44,12 +48,14 @@ export default function Board({testDelete} : {testDelete: Dispatch<SetStateActio
         })
     }
 
+   
+
     return (
         <div className="border-black border-[1px] border-solid rounded-xl shadow-xl p-[20px] mb-[20px]" style={{userSelect: "none"}}>
             
             <div className="flex relative">
                 <BeatOverlay />
-                {uiState.sequence.map((n, i) => <DynamicBeat key={uuid()} count={i} scale={uiState.scale} sequence={uiState.sequence} setUiState={setUiState} />)}
+                {uiState.sequence.map((n: (string|null), i: number) => <DynamicBeat key={uuid()} count={i} scale={uiState.scale} sequence={uiState.sequence} setUiState={setUiState} />)}
                 <div className="flex flex-col items-center">
                     <div className="flex">
                         <button className="btn btn-accent w-3/4" onClick={clearSequence}>clear</button>
