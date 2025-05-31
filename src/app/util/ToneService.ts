@@ -128,4 +128,9 @@ export class ToneService{
         this.currentSequence.clear();
         this.beatOverlayDispatch(0);
     }
+
+    shutDown(){
+        this.instrument.dispose();
+        this.currentSequence.dispose();
+    }
 }

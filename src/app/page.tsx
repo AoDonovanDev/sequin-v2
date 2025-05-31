@@ -6,11 +6,12 @@ import { v4 as uuid } from "uuid";
 import { ToneService } from "./util/ToneService";
 import { getTransport } from "tone";
 import { GlobalBoardStateContext } from "./GlobalBoardStateContext";
+import { BoardElemenObject } from "./types/declarations";
 
 
 
 export default function Home() {
-  const [boardList, setBoardList] = useState<React.JSX.Element[]>([]);
+  const [boardList, setBoardList] = useState<BoardElemenObject[]>([]);
 
   const DynamicInitialToneServiceContext = dynamic(() => import("./ToneServiceContext"))
   const DynamicBoard = dynamic(() => import("./sequencer/Board"), {
@@ -20,20 +21,29 @@ export default function Home() {
   const { boardRegistry } = useContext(GlobalBoardStateContext);
   
   useEffect( () => {
+    boardRegistry.boardListDispatch = setBoardList;
+    const boardId = uuid();
     setBoardList([
-      <DynamicInitialToneServiceContext contextValue={new ToneService("major")} key={uuid()}>
-        <DynamicBoard testDelete={testDelete}/>
-      </DynamicInitialToneServiceContext>
+      {
+        id: boardId,
+        element: <DynamicInitialToneServiceContext contextValue={new ToneService("major")} key={uuid()}>
+                  <DynamicBoard id={boardId}/>
+                 </DynamicInitialToneServiceContext>
+      }
     ])
   }, [])
 
   function addNewBoard(){
      console.log(boardRegistry);
+     const boardId = uuid();
     setBoardList( [
       ...boardList,
-      <DynamicInitialToneServiceContext contextValue={new ToneService("major")} key={uuid()}>
-        <DynamicBoard testDelete={testDelete}/>
-      </DynamicInitialToneServiceContext>
+       {
+        id: boardId,
+        element: <DynamicInitialToneServiceContext contextValue={new ToneService("major")} key={uuid()}>
+                  <DynamicBoard id={boardId}/>
+                 </DynamicInitialToneServiceContext>
+      }
     ])
   }
 
@@ -51,20 +61,13 @@ export default function Home() {
     }
   
 
-  function testDelete(){
-     setBoardList(bl => {
-      const [...newList] = bl.filter((b,i)=>i>0);
-
-      return newList;
-     })
-  }
   return (
     <div className="flex flex-col self-center my-[60px]">
       <div className="flex w-1/3 justify-between">
         <button className="btn btn-success" onClick={togglePlay}>play/pause</button>
         <button className="btn btn-error" onClick={stopClear}>stop/clear</button>
       </div>
-      {boardList}
+      {boardList.map(beo => beo.element)}
       <button className="btn btn-info self-end" onClick={addNewBoard}>add new</button>
     </div>
   );

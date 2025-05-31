@@ -1,22 +1,33 @@
 
-import { Board, UiState } from "../types/declarations";
+import { Dispatch, SetStateAction } from "react";
+import { BoardElemenObject, BoardInternal, UiState } from "../types/declarations";
 import { initialSequenceValues } from "./constants";
 import { v4 as uuid } from "uuid";
 
 export class BoardRegistry{
-    boardList: Set<Board> = new Set();
+    boardInternalList: Set<BoardInternal> = new Set();
     boardIdSet: Set<string> = new Set();
     id = uuid();
+    boardListDispatch!: Dispatch<SetStateAction<BoardElemenObject[]>>;
 
     clearAndReset(){
-        this.boardList.forEach(b => {
+        this.boardInternalList.forEach(b => {
             b.uiDispatch((state: UiState) => {
                 return {
                     ...state,
-                    sequence: initialSequenceValues
+                    sequence: new Array(16).fill(null)
                 }
             });
             b.toneService.clearToneServiceSequence();
         })
+    }
+
+    removeBoard(id: string){
+        this.boardListDispatch(list => {
+            console.log(id)
+            const filtered = [...list].filter(b => b.id != id);
+            console.log(filtered)
+            return filtered;
+        });
     }
 }

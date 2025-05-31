@@ -13,9 +13,13 @@ export interface ToneServiceStateProviderProps {
     contextValue: ToneService
 }
 
-export interface Board {
+export interface BoardInternal {
     id: string,
     toneService: ToneService,
     uiDispatch: Dispatch<SetStateAction<UiState>>
 }
 
+export interface BoardElemenObject {
+    id: string,
+    element: React.JSX.Element
+}
