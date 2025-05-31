@@ -6,8 +6,8 @@ import { v4 as uuid } from "uuid";
 import { ToneService } from "./util/ToneService";
 import { getTransport } from "tone";
 import { GlobalBoardStateContext } from "./GlobalBoardStateContext";
-import { BoardRegistry } from "./util/BoardRegistry";
-import { initialSequenceValues } from "./util/constants";
+
+
 
 export default function Home() {
   const [boardList, setBoardList] = useState<React.JSX.Element[]>([]);
@@ -18,7 +18,7 @@ export default function Home() {
   })
   
   const { boardRegistry } = useContext(GlobalBoardStateContext);
-
+  
   useEffect( () => {
     setBoardList([
       <DynamicInitialToneServiceContext contextValue={new ToneService("major")} key={uuid()}>
