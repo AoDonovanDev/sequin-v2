@@ -18,7 +18,7 @@ export default function Beat( { count, scale, sequence, setUiState} : {
     setUiState: Dispatch<SetStateAction<UiState>>
 }){
     return(
-        <div className={`grid rounded-xl ${count % 4 == 0 && "bg-gray-300"}  z-10`}>
+        <div className={`grid rounded-xl z-10 ${count % 4 == 0 && "bg-gray-300"}`}>
             {scale.map( (n, index) => <SequencerNode 
                                         key={uuid()} 
                                         note={n} 

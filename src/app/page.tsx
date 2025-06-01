@@ -62,7 +62,7 @@ export default function Home() {
   
 
   return (
-    <div className="flex flex-col self-center my-[60px]">
+    <div className="flex flex-col w-full h-full md:h-auto md:w-auto my-[60px]" id="rootDiv">
       <div className="flex w-1/3 justify-between">
         <button className="btn btn-success" onClick={togglePlay}>play/pause</button>
         <button className="btn btn-error" onClick={stopClear}>stop/clear</button>

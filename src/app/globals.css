@@ -2,3 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+@media screen and (orientation: portrait) {
+    #rootDiv {
+        transform: rotate(90deg);
+        width: 100dvh;
+        height: 100vw;
+        margin-top: 60%;
+        overflow: scroll;
+    }
+}

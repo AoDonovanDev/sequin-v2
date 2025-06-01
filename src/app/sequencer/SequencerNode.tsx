@@ -55,7 +55,7 @@ export default function SequencerNode( { note, nodeIsActive, count, scaleIndex, 
     }, [])
 
     return (
-        <div ref={elRef} className={`border-black border border-solid ${isHovered && "bg-white"} ${nodeIsActive && "bg-primary"} cursor-pointer p-[20px]`} 
+        <div ref={elRef} className={`border-black border border-solid ${isHovered && "bg-white"} ${nodeIsActive && "bg-primary"} cursor-pointer p-[20px] md:p-[20px]`} 
             onMouseEnter={handleMouseOver} 
             onMouseLeave={handleMouseLeave}
             onClick={handleNodeClick}></div>
