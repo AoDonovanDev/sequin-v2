@@ -1,1 +1,0 @@
-export const initialSequenceValues = new Array(16).fill(null);

@@ -2,7 +2,6 @@ import * as Tone from "tone";
 import { scaleMap } from "./scaleMap";
 import { Dispatch, SetStateAction } from "react";
 import { v4 as uuid } from "uuid";
-import { initialSequenceValues } from "./constants";
 
 
 export class ToneService{
@@ -124,7 +123,7 @@ export class ToneService{
     }
 
     clearToneServiceSequence(){
-        this.sequence = initialSequenceValues;
+        this.sequence = new Array(16).fill(null);
         this.currentSequence.clear();
         this.beatOverlayDispatch(0);
     }
