@@ -3,7 +3,6 @@
 import { Dispatch, SetStateAction, SyntheticEvent, useEffect, useRef, useState } from "react";
 import { useContext } from "react";
 import { ToneServiceContext } from "../ToneServiceContext";
-import { UiState } from "../types/declarations";
 
 
 export default function SequencerNode( { note, nodeIsActive, count, scaleIndex, setUiState, isReferenceNode } : {
@@ -53,7 +52,7 @@ export default function SequencerNode( { note, nodeIsActive, count, scaleIndex, 
     }, [])
 
     return (
-        <div ref={elRef} className={`border-black border border-solid ${isHovered && "bg-white"} ${nodeIsActive && "bg-primary"} cursor-pointer w-[30px] h-[30px] md:w-[44px] md:h-[44px]`} 
+        <div ref={elRef} className={`border-black border border-solid ${isHovered && "bg-white"} ${nodeIsActive && "bg-primary"} cursor-pointer w-[38px] h-[38px] md:w-[44px] md:h-[44px]`} 
             onMouseEnter={handleMouseOver} 
             onMouseLeave={handleMouseLeave}
             onClick={handleNodeClick}></div>

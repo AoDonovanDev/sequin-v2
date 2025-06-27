@@ -1,6 +1,5 @@
 
 import { Dispatch, SetStateAction } from "react";
-import { BoardElemenObject, BoardInternal, UiState } from "../types/declarations";
 import { v4 as uuid } from "uuid";
 
 export class BoardRegistry{

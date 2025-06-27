@@ -6,7 +6,6 @@ import { v4 as uuid } from "uuid";
 import { ToneService } from "./util/ToneService";
 import { getTransport } from "tone";
 import { GlobalBoardStateContext } from "./GlobalBoardStateContext";
-import { BoardElemenObject } from "./types/declarations";
 
 
 
@@ -19,7 +18,7 @@ export default function Home() {
   })
   
   const { boardRegistry } = useContext(GlobalBoardStateContext);
-  
+
   useEffect( () => {
     boardRegistry.boardListDispatch = setBoardList;
     const boardId = uuid();
@@ -62,7 +61,7 @@ export default function Home() {
   
 
   return (
-    <div className="flex flex-col w-full h-full md:h-auto md:w-auto my-[60px]" id="rootDiv">
+    <div className="flex flex-col w-full h-full md:h-auto md:w-auto md:my-[60px]" id="rootDiv">
       <div className="flex w-1/3 justify-between">
         <button className="btn btn-success" onClick={togglePlay}>play/pause</button>
         <button className="btn btn-error" onClick={stopClear}>stop/clear</button>

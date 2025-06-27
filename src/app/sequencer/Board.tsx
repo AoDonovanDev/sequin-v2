@@ -16,6 +16,8 @@ const DynamicOctaveSelect = dynamic(() => import("./OctaveSelect"), {
     ssr: false
 });
 
+
+
 export default function Board( { id } : {id: string} ){
 
     const { toneService } = useContext(ToneServiceContext);

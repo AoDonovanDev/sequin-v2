@@ -1,25 +1,30 @@
-export interface UiState{
+interface UiState{
     octave: number,
     scale: string[],
     sequence: (string | null)[]
 }
 
-export interface ToneServiceState {
+interface ToneServiceState {
     toneService : ToneService;
 }
 
-export interface ToneServiceStateProviderProps {
+interface ToneServiceStateProviderProps {
     children: ReactElement,
     contextValue: ToneService
 }
 
-export interface BoardInternal {
+interface BoardInternal {
     id: string,
     toneService: ToneService,
     uiDispatch: Dispatch<SetStateAction<UiState>>
 }
 
-export interface BoardElemenObject {
+interface BoardElemenObject {
     id: string,
     element: React.JSX.Element
+}
+
+type OrientationLockType = "any" | "landscape" | "natural" | "portrait" | OrientationType
+interface ScreenOrientation extends EventTarget {
+  lock(orientation: OrientationLockType): Promise<void>;
 }
