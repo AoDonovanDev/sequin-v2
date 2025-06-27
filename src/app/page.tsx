@@ -58,12 +58,6 @@ export default function Home() {
       getTransport().stop();
       boardRegistry.clearAndReset();
     }
-    
-  
-  useEffect(()=> {
-    console.log("hmmmmmmmmmmmm")
-    screen.orientation.lock("landscape");
-  },[])
   
 
   return (
