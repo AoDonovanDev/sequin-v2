@@ -1,6 +1,6 @@
 'use client';
 
-import { Dispatch, SetStateAction, SyntheticEvent, useEffect, useRef, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
 import { useContext } from "react";
 import { ToneServiceContext } from "../ToneServiceContext";
 
