@@ -2,7 +2,6 @@
 
 import { Dispatch, SetStateAction, SyntheticEvent, useContext } from "react"
 import { ToneServiceContext } from "../ToneServiceContext";
-import { UiState } from "../types/declarations";
 
 
 export default function OctaveSelect( { setUiState }: {setUiState: Dispatch<SetStateAction<UiState>>} ){
