@@ -18,12 +18,12 @@ export default function SequencerNode( { note, nodeIsActive, count, scaleIndex, 
 
     const { toneService } = useContext(ToneServiceContext);
 
-    function handleMouseOver(e: SyntheticEvent){
+    function handleMouseOver(){
         if(nodeIsActive) return;
         setIsHovered(true);
     }
 
-    function handleMouseLeave(e: SyntheticEvent){
+    function handleMouseLeave(){
         setIsHovered(false);
     }    
 

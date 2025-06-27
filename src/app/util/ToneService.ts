@@ -47,7 +47,7 @@ export class ToneService{
             this.activeBeatLoop = new Tone.Loop(() => {
                 const trasportProgress =  Math.floor(Tone.getTransport().progress*16);
                 this.transportProgress = trasportProgress;
-                this.beatOverlayDispatch(offset => this.nodeWidth*trasportProgress);
+                this.beatOverlayDispatch(this.nodeWidth*trasportProgress);
             }, "8n").start(0);
         }
     }
@@ -67,7 +67,7 @@ export class ToneService{
 
     setOctave(num: number){
         this.octave = num;
-        this.updateSequenceOctave(num);
+        this.updateSequenceOctave();
         this.scale = this.scaleConstructor(this.scaleName);
         this.playSequence();
     }
@@ -76,7 +76,7 @@ export class ToneService{
         return scaleMap[scaleName]!.map((note, index) => index == 0 ? `${note}${this.octave+1}` : `${note}${this.octave}`);
     }
 
-    updateSequenceOctave(num: number){
+    updateSequenceOctave(){
         this.sequence = this.sequence.map(note => {
             if(!note) return note;
             if(note == this.scale[0]){
@@ -104,7 +104,7 @@ export class ToneService{
 
     async start(){
         if(Tone.getTransport().state=='stopped'){
-            Tone.start().then(resolve => Tone.getTransport().start());
+            Tone.start().then(() => Tone.getTransport().start());
         } 
     }
 
