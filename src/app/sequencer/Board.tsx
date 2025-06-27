@@ -41,7 +41,7 @@ export default function Board( { id } : {id: string} ){
 
 
     function clearSequence(){
-        toneService.clearSequence()
+        toneService.clearSequence();
         setUiState({
             ...uiState,
             sequence: toneService.sequence
