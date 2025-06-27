@@ -1,7 +1,6 @@
 import { createContext, ReactElement } from "react";
 import { ToneService } from "./util/ToneService";
 import { getTransport } from "tone";
-import { ToneServiceState, ToneServiceStateProviderProps } from "./types/declarations";
 
 //configure transport
 const transport = getTransport();
