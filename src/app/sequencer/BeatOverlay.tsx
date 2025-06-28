@@ -23,7 +23,9 @@ export default function BeatOverlay(){
         if(toneService.nodeWidth && elRef.current){
             const width = toneService.nodeWidth.toString();
             elRef.current.style.width=`${width}px`;
+            console.log("toneservice.nodeWidth in useEffect inside: ", toneService.nodeWidth)
         }
+        console.log("toneservice.nodeWidth in useEffect outside: ", toneService.nodeWidth)
     }, [toneService.width])
 
     return (
