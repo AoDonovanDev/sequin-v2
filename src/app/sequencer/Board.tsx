@@ -59,7 +59,6 @@ export default function Board( { id } : {id: string} ){
     return (
         <div className="border-black border-[1px] border-solid rounded-xl shadow-xl md:p-[20px] mb-[20px] " style={{userSelect: "none"}}>
             <div className="flex relative">
-                <BeatOverlay />
                 {uiState.sequence.map((n: (string|null), i: number) => <DynamicBeat key={uuid()} count={i} scale={uiState.scale} sequence={uiState.sequence} setUiState={setUiState} />)}
                 <div className="flex flex-col items-center">
                     <div className="flex">
@@ -69,6 +68,7 @@ export default function Board( { id } : {id: string} ){
                     <DynamicOctaveSelect setUiState={setUiState}/>
                     <InstrumentSelect />
                 </div>
+                <BeatOverlay />
             </div>
         </div>
     )

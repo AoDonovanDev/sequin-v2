@@ -9,7 +9,6 @@ export default function BeatOverlay(){
 
     const [offset, setOffset] = useState<number | null>(null);
     
-    
     //register setoffset dispatch function to toneservice to be used in callback loop, render current position based on offset state
     useEffect(()=> {
         toneService.beatOverlayDispatch = setOffset;
@@ -21,12 +20,11 @@ export default function BeatOverlay(){
     //set width of overlay based on width of sequencer nodes as registered to toneservice
     useEffect(()=> {
         if(toneService.nodeWidth && elRef.current){
-            const width = toneService.nodeWidth.toString();
-            elRef.current.style.width=`${width}px`;
-            console.log("toneservice.nodeWidth in useEffect inside: ", toneService.nodeWidth)
+            elRef.current.style.width=`${toneService.nodeWidth}px`;
+            console.log("BeatOverlay useEffect inside: ", toneService.nodeWidth)
         }
-        console.log("toneservice.nodeWidth in useEffect outside: ", toneService.nodeWidth)
-    }, [toneService.width])
+        console.log("BeatOverlay useEffect outside: ", toneService.nodeWidth)
+    }, [toneService.nodeWidth])
 
     return (
         <div ref={elRef} className={typeof offset == 'number' ? "outline outline-offset-1 outline-amber-600 rounded h-full absolute z-0" : "rounded h-full absolute z-0"}>
