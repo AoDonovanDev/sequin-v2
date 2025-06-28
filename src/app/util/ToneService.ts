@@ -48,7 +48,6 @@ export class ToneService{
                 const trasportProgress =  Math.floor(Tone.getTransport().progress*16);
                 this.transportProgress = trasportProgress;
                 this.beatOverlayDispatch(this.nodeWidth*trasportProgress);
-                console.log("inside beat overlay dispatch: ", this.nodeWidth)
             }, "8n").start(0);
         }
     }

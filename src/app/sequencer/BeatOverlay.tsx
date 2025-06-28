@@ -20,11 +20,11 @@ export default function BeatOverlay(){
 
     //set width of overlay based on width of sequencer nodes as registered to toneservice
     useEffect(()=> {
-        if(elRef.current){
+        if(toneService.nodeWidth && elRef.current){
             const width = toneService.nodeWidth.toString();
             elRef.current.style.width=`${width}px`;
         }
-    }, [])
+    }, [toneService.width])
 
     return (
         <div ref={elRef} className={typeof offset == 'number' ? "outline outline-offset-1 outline-amber-600 rounded h-full absolute z-0" : "rounded h-full absolute z-0"}>
