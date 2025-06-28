@@ -48,6 +48,7 @@ export default function SequencerNode( { note, nodeIsActive, count, scaleIndex, 
     useEffect(()=> {
         if(elRef.current && isReferenceNode){         
             toneService.nodeWidth = elRef.current.getClientRects()[0].width;
+            console.log("inside noderef register useeffect: ", elRef.current.getClientRects()[0].width)
         }
     }, [])
 
