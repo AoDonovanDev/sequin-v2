@@ -48,7 +48,6 @@ export default function SequencerNode( { note, nodeIsActive, count, scaleIndex, 
     useEffect(()=> {
         if(elRef.current && isReferenceNode){         
             toneService.nodeWidth = elRef.current.getClientRects()[0].width;
-            console.log("sequencer node reports width as: ", toneService.nodeWidth);
         }
     }, [])
 
