@@ -51,7 +51,6 @@ export default function Board( { id } : {id: string} ){
     }
 
     function removeSelf(){
-        console.log("remove called");
         toneService.shutDown();
         boardRegistry.removeBoard(id);
     }

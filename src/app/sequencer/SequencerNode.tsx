@@ -14,6 +14,11 @@ export default function SequencerNode( { note, nodeIsActive, count, scaleIndex, 
     isReferenceNode: boolean  
 }){
 
+    if(isReferenceNode){
+        const width = screen.width;
+        console.log("here is the screen width reported by ref node: ", width);
+    }
+
     const [isHovered, setIsHovered] = useState(false);
 
     const { toneService } = useContext(ToneServiceContext);

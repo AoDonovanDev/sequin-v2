@@ -10,6 +10,7 @@ import { GlobalBoardStateContext } from "./GlobalBoardStateContext";
 
 
 export default function Home() {
+
   const [boardList, setBoardList] = useState<BoardElemenObject[]>([]);
 
   const DynamicInitialToneServiceContext = dynamic(() => import("./ToneServiceContext"))
@@ -33,7 +34,6 @@ export default function Home() {
   }, [])
 
   function addNewBoard(){
-     console.log(boardRegistry);
      const boardId = uuid();
     setBoardList( [
       ...boardList,
@@ -61,7 +61,7 @@ export default function Home() {
   
 
   return (
-    <div className="flex flex-col w-full h-full md:h-auto md:w-auto md:my-[60px]" id="rootDiv">
+    <div className="flex flex-col w-full h-full mx-[80px] md:h-auto md:w-auto md:my-[60px] md:px-0" id="rootDiv">
       <div className="flex w-1/3 justify-between">
         <button className="btn btn-success" onClick={togglePlay}>play/pause</button>
         <button className="btn btn-error" onClick={stopClear}>stop/clear</button>
