@@ -18,6 +18,8 @@ export default function SequencerNode( { note, nodeIsActive, count, scaleIndex, 
 
     const { toneService } = useContext(ToneServiceContext);
 
+    const elRef = useRef<HTMLDivElement>(null);
+
     function handleMouseOver(){
         if(nodeIsActive) return;
         setIsHovered(true);
@@ -42,8 +44,6 @@ export default function SequencerNode( { note, nodeIsActive, count, scaleIndex, 
             }
         )
     }
-
-    const elRef = useRef<HTMLDivElement>(null);
 
     useEffect(()=> {
         if(elRef.current && isReferenceNode){         
