@@ -24,7 +24,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <head></head>
+      <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/> 
+      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased w-full flex flex-col items-center`}
       >
