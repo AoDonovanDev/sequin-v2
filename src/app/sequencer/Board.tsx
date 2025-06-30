@@ -56,7 +56,7 @@ export default function Board( { id } : {id: string} ){
     }
 
     return (
-        <div className="border-black border-[1px] border-solid rounded-xl shadow-xl pl-[20px] py-[20px] mb-[20px]" style={{userSelect: "none"}}>
+        <div className="border-black border-[1px] border-solid rounded-xl shadow-xl pl-[20px] py-[20px] mb-[20px] lg:pr-[20px]" style={{userSelect: "none"}}>
             <div className="flex relative">
                 {uiState.sequence.map((n: (string|null), i: number) => <DynamicBeat key={uuid()} count={i} scale={uiState.scale} sequence={uiState.sequence} setUiState={setUiState} />)}
                 <div className="flex flex-col justify-between px-[2px]">
