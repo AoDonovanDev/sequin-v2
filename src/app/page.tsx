@@ -12,13 +12,15 @@ import { GlobalBoardStateContext } from "./GlobalBoardStateContext";
 export default function Home() {
 
   const [boardList, setBoardList] = useState<BoardElemenObject[]>([]);
+  
 
   const DynamicInitialToneServiceContext = dynamic(() => import("./ToneServiceContext"))
   const DynamicBoard = dynamic(() => import("./sequencer/Board"), {
     ssr: false
   })
-  
   const { boardRegistry } = useContext(GlobalBoardStateContext);
+
+ 
 
   useEffect( () => {
     boardRegistry.boardListDispatch = setBoardList;
@@ -67,7 +69,7 @@ export default function Home() {
         <button className="btn btn-error" onClick={stopClear}>stop/clear</button>
       </div>
       {boardList.map(beo => beo.element)}
-      <button className="btn btn-info self-end" onClick={addNewBoard}>add new</button>
+      <button className="btn btn-info self-end" onClick={addNewBoard}>add new</button>      
     </div>
   );
 }
