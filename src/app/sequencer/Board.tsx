@@ -2,7 +2,7 @@
 
 import { v4 as uuid } from "uuid";
 import dynamic from "next/dynamic";
-import { use, useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { ToneServiceContext } from "../ToneServiceContext";
 import InstrumentSelect from "./InstrumentSelect";
 import BeatOverlay from "./BeatOverlay";
