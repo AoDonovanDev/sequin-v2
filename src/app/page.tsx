@@ -61,7 +61,7 @@ export default function Home() {
   
 
   return (
-    <div className="flex flex-col w-full h-full mx-[80px] md:h-auto md:w-auto md:my-[60px] md:px-0" id="rootDiv">
+    <div className="flex flex-col w-full h-full md:h-auto md:w-auto md:my-[60px] md:px-0" id="rootDiv">
       <div className="flex w-1/3 justify-between">
         <button className="btn btn-success" onClick={togglePlay}>play/pause</button>
         <button className="btn btn-error" onClick={stopClear}>stop/clear</button>
