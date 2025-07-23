@@ -2,13 +2,18 @@
 @tailwind components;
 @tailwind utilities;
 
-/* @media screen and (max-width: 600px) {
-    #rootDiv {
-        transform: rotate(90deg);
-        width: 100dvh;
-        height: 100vw;
-        position: absolute;
-        top: 180px;
-        overflow: scroll;
+
+#rotationImage {
+    animation-duration: 1.5s;
+    animation-name: rotate-icon;
+    animation-iteration-count: infinite;
+}
+
+@keyframes rotate-icon {
+    from {
+        transform: rotate(0deg)
     }
-} */
+    to {
+        transform: rotate(90deg)
+    }
+}

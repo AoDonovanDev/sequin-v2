@@ -28,19 +28,7 @@ export default function Board( { id } : {id: string} ){
         sequence: toneService.sequence,
         scale: toneService.scale
     })
-
-    const [screenOrientation, setScreenOrientation] = useState<string>(screen.orientation.type);
-
-
     
-
-    useEffect(()=> {
-        screen.orientation.addEventListener("change", (event) => {
-        const orientation = event.target as ScreenOrientation;
-        setScreenOrientation(orientation.type);
-        })
-    },[])
-
     useEffect(()=> {
         toneService.updateBeatOverlay();
         if(!boardRegistry.boardIdSet.has(id)){
@@ -67,7 +55,6 @@ export default function Board( { id } : {id: string} ){
         boardRegistry.removeBoard(id);
     }
     return (
-         screen.width<600 && screenOrientation != "landscape-primary" ? <h1 className="absolute left-20 top-60">turn it sideways :p</h1> :
          <div className="border-black border-[1px] border-solid rounded-xl shadow-xl pl-[20px] py-[20px] mb-[20px] lg:pr-[20px]" style={{userSelect: "none"}}>
             <div className="flex relative">
                 {uiState.sequence.map((n: (string|null), i: number) => <DynamicBeat key={uuid()} count={i} scale={uiState.scale} sequence={uiState.sequence} setUiState={setUiState} />)}

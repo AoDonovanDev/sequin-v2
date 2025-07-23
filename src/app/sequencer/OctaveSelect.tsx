@@ -11,7 +11,7 @@ export default function OctaveSelect( { setUiState }: {setUiState: Dispatch<SetS
     function handleOctaveSelect(event: SyntheticEvent){
         const target = event.target as HTMLInputElement
         const newOctaveValue = parseInt(target.value);
-        toneService.setOctave(newOctaveValue)
+        toneService.setOctave(newOctaveValue);
         setUiState((state) => {
             const {octave, scale, sequence} = toneService;
             return {
